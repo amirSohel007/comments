@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,600&display=swap');
+body {
+    margin: 0;
+    box-sizing: border-box;
+    background: url(https://images.pexels.com/photos/4048182/pexels-photo-4048182.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260) no-repeat;
+    background-size: cover;
+    background-position: 0px 32%;
+    font-family: 'Nunito', sans-serif;
+}    
+.comment-wrapper {
+    max-width: 400px;
+    background: #fff;
+    padding: 20px;
+    margin-left: 20px;
+    border-radius: 3px;
+    margin-top: 20px;
+    min-height: 74vh;
+    position: relative;
+}
+
+#comment_list_inner {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.user_avtar {
+    width: 30px;
+    border-radius: 3px;
+    overflow: hidden;
+    border: solid 1px #e5e5e5;
+    height: 30px;
+    float: left;
+}
+.user_avtar img {
+    width: 100%;
+}
+
+.user-comments {
+    padding-left: 50px;
+}
+
+.user-comments p {
+    margin-top: 4px;
+    font-size: 13px;
+    letter-spacing: 0.3px;
+    margin-bottom: 4px;
+}
+
+.user-comments h3 {
+    font-size: 14px;
+    margin-bottom: 0 !important;
+}
+
+.user-comments .reply {
+    text-decoration: none;
+    font-size: 13px;
+    color: #656464;
+}
+
+.sub-comment {
+    padding-left: 20px;
+    margin-top: 20px;
+}
+
+.comment-area input {
+    flex: 3;
+    border: solid 1px #e5e5e5;
+    min-height: 29px;
+    margin-right: 25px;
+    padding: 0 15px;
+    font-family: 'Nunito', sans-serif;
+
+}
+
+.comment-area {
+    display: flex;
+}
+
+.comment-area {
+    display: flex;
+    position: absolute;
+    width: 90%;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+.comment-area button {
+    background: #3F51B5;
+    border: none;
+    color: #fff;
+    padding: 0px 20px;
+    border-radius: 2px;
+    font-size: 13px;
+    cursor: pointer;
+    z-index: 999;
+}
