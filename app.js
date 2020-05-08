@@ -29,10 +29,13 @@ document.addEventListener("DOMContentLoaded", () => {
     let all_comments = JSON.parse(localStorage.getItem("comments"));
     all_comments.forEach((element, i) => {
       if (i == index) {
-        if (element.children.message != "") {
+        if (element.children) {
           element.children.push(reply);
-          console.log('only pushed')
         } 
+        else {
+          element.children = []
+          element.children.push(reply);
+        }
       }
     });
     updateStroge(all_comments);
