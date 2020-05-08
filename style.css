@@ -1,98 +1,180 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito:400,600&display=swap');
 body {
-    margin: 0;
-    box-sizing: border-box;
-    background: url(https://images.pexels.com/photos/4048182/pexels-photo-4048182.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260) no-repeat;
-    background-size: cover;
-    background-position: 0px 32%;
-    font-family: 'Nunito', sans-serif;
-}    
+	margin: 0;
+	box-sizing: border-box;
+	background: url('https://images.pexels.com/photos/1007657/pexels-photo-1007657.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260') no-repeat center center;
+	font-family: 'Nunito', sans-serif;
+	background-size: cover;
+}
+
 .comment-wrapper {
-    max-width: 400px;
-    background: #fff;
-    padding: 20px;
-    margin-left: 20px;
-    border-radius: 3px;
-    margin-top: 20px;
-    min-height: 74vh;
-    position: relative;
+	max-width: 400px;
+	background: #fff;
+	padding: 20px;
+	margin-left: 40px;
+	border-radius: 3px;
+	margin-top: 20px !important;
+	min-height: 80vh;
+	position: relative;
 }
 
 #comment_list_inner {
-    padding: 0;
-    margin: 0;
-    list-style: none;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	position: relative;
 }
 
 .user_avtar {
-    width: 30px;
-    border-radius: 3px;
-    overflow: hidden;
-    border: solid 1px #e5e5e5;
-    height: 30px;
-    float: left;
+	width: 30px;
+	border-radius: 3px;
+	overflow: hidden;
+	border: solid 1px #e5e5e5;
+	height: 30px;
+	float: left;
 }
+
 .user_avtar img {
-    width: 100%;
+	width: 100%;
 }
 
 .user-comments {
-    padding-left: 50px;
+	padding-left: 50px;
 }
 
 .user-comments p {
-    margin-top: 4px;
-    font-size: 13px;
-    letter-spacing: 0.3px;
-    margin-bottom: 4px;
+	margin-top: 4px;
+	font-size: 13px;
+	letter-spacing: 0.3px;
+	margin-bottom: 4px;
 }
 
 .user-comments h3 {
-    font-size: 14px;
-    margin-bottom: 0 !important;
+	font-size: 14px;
+	margin-bottom: 0 !important;
 }
 
-.user-comments .reply {
-    text-decoration: none;
-    font-size: 13px;
-    color: #656464;
+.user-comments .reply,
+.user-comments .delete {
+	text-decoration: none;
+	font-size: 12px;
+	color: #656464;
+	cursor: pointer;
+	display: inline-block;
+}
+
+.delete {
+	margin-left: 5px;
 }
 
 .sub-comment {
-    padding-left: 20px;
-    margin-top: 20px;
+	padding-left: 20px;
+	margin-top: 20px;
 }
 
-.comment-area input {
-    flex: 3;
-    border: solid 1px #e5e5e5;
-    min-height: 29px;
-    margin-right: 25px;
-    padding: 0 15px;
-    font-family: 'Nunito', sans-serif;
+.comment-area input,
+.emoji-wysiwyg-editor {
+	flex: 3;
+	border: solid 1px #e5e5e5;
+	min-height: 29px;
+	margin-right: 25px;
+	padding: 0 15px;
+	font-family: 'Nunito', sans-serif;
+	border-radius: 30px;
+	background: #e5e5e5;
+	transition: all 0.2s;
+	font-size: 12px;
+	line-height: 27px;
+}
 
+.comment-area input:focus,
+.emoji-wysiwyg-editor,
+.comment-area button:focus {
+	outline: none;
+	box-shadow: 0 0 0;
+	transition: all 0.2s;
 }
 
 .comment-area {
-    display: flex;
+	display: flex;
 }
 
 .comment-area {
-    display: flex;
-    position: absolute;
-    width: 90%;
-    bottom: 20px;
-    left: 0;
-    right: 0;
-    margin: auto;
+	display: flex;
+	position: absolute;
+	width: 90%;
+	bottom: 20px;
+	left: 0;
+	right: 0;
+	margin: auto;
 }
+
 .comment-area button {
-    background: #3F51B5;
-    border: none;
-    color: #fff;
-    padding: 0px 20px;
-    border-radius: 2px;
-    font-size: 13px;
-    cursor: pointer;
-    z-index: 999;
+	background: #3F51B5;
+	border: none;
+	color: #fff;
+	padding: 0px 20px;
+	border-radius: 2px;
+	font-size: 13px;
+	cursor: pointer;
+	z-index: 999;
+	border-radius: 30px;
+}
+
+#comment_list_inner .comment-area {
+	bottom: -45px;
+	display: none;
+}
+
+.content-section {
+	display: flex;
+}
+
+.content-section figure h3,
+.content-section figure {
+	margin-top: 0 !important;
+}
+
+.content-section figure {
+	margin: auto !important;
+	padding: 0 40px 0 70px;
+}
+
+.half-screen {
+	display: flex;
+}
+
+.half-screen>div {
+	flex: 1;
+}
+
+.content-section figure {
+	color: #fff;
+	line-height: 26px;
+}
+
+.content-section figure h3 {
+	color: #fff;
+	font-weight: 600;
+	font-size: 31px;
+	margin-bottom: 10px;
+}
+
+#comment-listing {
+	max-height: 71vh;
+	overflow: auto;
+}
+
+#comment-listing::-webkit-scrollbar {
+	width: 6px;
+}
+
+#comment-listing::-webkit-scrollbar-track {
+	background: #e5e5e5;
+	border-radius: 30px;
+}
+
+#comment-listing::-webkit-scrollbar-thumb {
+	background-color: #5e5e5e;
+	border-radius: 30px;
 }

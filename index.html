@@ -1,37 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bind Function</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-
-    <!--  <div class="sub-comment">
-                    <div class="user_avtar">
-                        <img
-                            src="https://instagram.fdel18-1.fna.fbcdn.net/v/t51.2885-15/e35/95168755_1188313104848732_7163586086101228730_n.jpg?_nc_ht=instagram.fdel18-1.fna.fbcdn.net&_nc_cat=108&_nc_ohc=E04Bpx3IeJYAX8m_BP-&oh=3486a37e1f6b0807382ed237660dc258&oe=5EDC7BFF">
-                    </div>
-                    <div class="user-comments">
-                        <h3>Shreya Kalyan</h3>
-                        <p>${comment.children.message}</p>
-                        <a class="reply" href="void(0)">Reply</a>
-                    </div>
-                </div>
-                 -->
-   
+<div class="half-screen">
+    <!-- Left Side Caption -->
+    <div class="content-section">
+        <figure>
+            <h3>JavaScript Nested Comment Widget</h3>
+            <p>A JavaScript Nested comment widget app which is developed in pure vanilla JS. you can add comments and reply on any comments on multi level.</p>
+        </figure>
+    </div>
+   <div class="comment-section">
     <div class="comment-wrapper">
         <div id="comment_list_inner">
-           
+            <!--Nested comment form-->
+            <div class="comment-area">
+                <input type="text" placeholder="write comment..." id="reply-box">
+                <button id="reply_comment">Add</button>
+            </div>
+            <!-- Nested form end -->
+
+            <div id="comment-listing">
+              
+            </div>
         </div>
+        <!-- main comment form -->
         <div class="comment-area">
             <input type="text" placeholder="write comment..." id="comment_box">
             <button id="add_comment">Add</button>
         </div>
+         <!-- main comment end -->
     </div>
-
+   </div>
+</div>   
+   
+    <!-- Main applicatoin js -->
     <script src="app.js"></script>
-</body>
 </html>
