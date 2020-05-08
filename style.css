@@ -72,8 +72,7 @@ body {
 	margin-top: 20px;
 }
 
-.comment-area input,
-.emoji-wysiwyg-editor {
+.comment-area input{
 	flex: 3;
 	border: solid 1px #e5e5e5;
 	min-height: 29px;
@@ -82,17 +81,16 @@ body {
 	font-family: 'Nunito', sans-serif;
 	border-radius: 30px;
 	background: #e5e5e5;
-	transition: all 0.2s;
+	transition: all 0.3s;
 	font-size: 12px;
 	line-height: 27px;
 }
 
 .comment-area input:focus,
-.emoji-wysiwyg-editor,
 .comment-area button:focus {
 	outline: none;
 	box-shadow: 0 0 0;
-	transition: all 0.2s;
+	transition: all 0.3s;
 }
 
 .comment-area {
@@ -122,8 +120,10 @@ body {
 }
 
 #comment_list_inner .comment-area {
-	bottom: -45px;
-	display: none;
+	position: static;
+    display: none;
+    margin-bottom:60px;
+    margin-top: 20px;
 }
 
 .content-section {

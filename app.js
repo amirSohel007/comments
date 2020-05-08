@@ -5,7 +5,9 @@ document.addEventListener("DOMContentLoaded", () => {
   let comment_btn = document.querySelector("#add_comment");
   let comment_wrapper = document.querySelector("#comment-listing");
   let reply_textbox = document.querySelector("#reply_comment");
-  let nestedCommentForm = document.querySelector("#comment_list_inner .comment-area");
+  let nestedCommentForm = document.querySelector(
+    "#comment_list_inner .comment-area"
+  );
 
   //initialize loacl stroge if not
   if (localStorage.getItem("comments") === null)
@@ -19,10 +21,10 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   //update local stroge with new data
-  let updateStroge = newData => {
+  let updateStroge = (newData) => {
     localStorage.setItem("comments", JSON.stringify(newData));
     renderComments();
-  }
+  };
 
   //Add reply on the same index
   let addReply = (reply, index) => {
@@ -31,9 +33,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (i == index) {
         if (element.children) {
           element.children.push(reply);
-        } 
-        else {
-          element.children = []
+        } else {
+          element.children = [];
           element.children.push(reply);
         }
       }
@@ -42,14 +43,14 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   //Delete parent comment
-  let deleteComment = index => {
+  let deleteComment = (index) => {
     let get_all_comments = getAllComments();
     get_all_comments.splice(index, 1);
     updateStroge(get_all_comments);
-  }
+  };
 
   // Delete child comment
-  let deleteChild = id => {
+  let deleteChild = (id) => {
     let get_all_comments = getAllComments();
     get_all_comments.map((comment) => {
       if (comment.children) {
@@ -57,13 +58,13 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
     updateStroge(get_all_comments);
-  }
+  };
 
   //get all existing comments from localStroge
-  let getAllComments = ()  => JSON.parse(localStorage.getItem('comments'))
+  let getAllComments = () => JSON.parse(localStorage.getItem("comments"));
 
   // Reply on any parent comment
-  let reply = index => {
+  let reply = (index) => {
     //show comment reply form
     nestedCommentForm.style.display = "flex";
     reply_textbox.addEventListener("click", () => {
@@ -77,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.querySelector("#reply-box").value = "";
       nestedCommentForm.style.display = "none";
     });
-  }
+  };
 
   let renderComments = () => {
     let get_all_comments = getAllComments();
@@ -121,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
     //get list from bottom
     comment_wrapper.scrollTo({
       top: comment_wrapper.scrollHeight,
-      behavior: 'smooth'
+      behavior: "smooth",
     });
   };
 
