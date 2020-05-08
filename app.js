@@ -13,20 +13,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //Add comment object in localStorge
   let addComment = (comment) => {
-    let all_comments = JSON.parse(localStorage.getItem("comments"));
+    let all_comments = getAllComments();
     all_comments.push(comment);
-    localStorage.setItem("comments", JSON.stringify(all_comments));
+    updateStroge(all_comments);
   };
 
   //update local stroge with new data
-  function updateStroge(newData) {
+  let updateStroge = newData => {
     localStorage.setItem("comments", JSON.stringify(newData));
-    getAllComments();
+    renderComments();
   }
 
   //Add reply on the same index
   let addReply = (reply, index) => {
-    let all_comments = JSON.parse(localStorage.getItem("comments"));
+    let all_comments = getAllComments();
     all_comments.forEach((element, i) => {
       if (i == index) {
         if (element.children) {
@@ -42,15 +42,15 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   //Delete parent comment
-  function deleteComment(index) {
-    let get_all_comments = JSON.parse(localStorage.getItem("comments"));
+  let deleteComment = index => {
+    let get_all_comments = getAllComments();
     get_all_comments.splice(index, 1);
     updateStroge(get_all_comments);
   }
 
   // Delete child comment
-  function deleteChild(id) {
-    let get_all_comments = JSON.parse(localStorage.getItem("comments"));
+  let deleteChild = id => {
+    let get_all_comments = getAllComments();
     get_all_comments.map((comment) => {
       if (comment.children) {
         comment.children.splice(id, 1);
@@ -59,8 +59,11 @@ document.addEventListener("DOMContentLoaded", () => {
     updateStroge(get_all_comments);
   }
 
+  //get all existing comments from localStroge
+  let getAllComments = ()  => JSON.parse(localStorage.getItem('comments'))
+
   // Reply on any parent comment
-  function reply(index) {
+  let reply = index => {
     //show comment reply form
     nestedCommentForm.style.display = "flex";
     reply_textbox.addEventListener("click", () => {
@@ -76,8 +79,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  let getAllComments = () => {
-    let get_all_comments = JSON.parse(localStorage.getItem("comments"));
+  let renderComments = () => {
+    let get_all_comments = getAllComments();
     let comment_list = get_all_comments.map((comment, index) => {
       return `<li class="comment_list">
         <div class="parent-comment">
@@ -112,7 +115,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     </li>`;
     });
+
+    //Bind wiht html
     comment_wrapper.innerHTML = comment_list;
+    //get list from bottom
+    comment_wrapper.scrollTo({
+      top: comment_wrapper.scrollHeight,
+      behavior: 'smooth'
+    });
   };
 
   window.reply = reply;
@@ -129,10 +139,10 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     comment_box.value = "";
     addComment(comment_obj);
-    getAllComments();
+    renderComments();
   });
   //on load get all comments
-  getAllComments();
+  renderComments();
 });
 
 
