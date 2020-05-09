@@ -31,10 +31,12 @@ document.addEventListener("DOMContentLoaded", () => {
     let all_comments = getAllComments();
     all_comments.forEach((element, i) => {
       if (i == index) {
-        if (!element.children) {
+        if (element.children) {
+          element.children.push(reply);
+        } else {
           element.children = [];
+          element.children.push(reply);
         }
-        element.children.push(reply);
       }
     });
     updateStroge(all_comments);
@@ -108,10 +110,10 @@ document.addEventListener("DOMContentLoaded", () => {
             <a onclick="reply(${index})" class="reply">Reply</a>
             <a onclick="deleteChild(${childIndex})" class="delete">Delete</a>
         </div>
-    </div>`): ""
+    </div>`).join(''): ""
         }
     </li>`;
-    });
+    }).join('');
 
     //Bind wiht html
     comment_wrapper.innerHTML = comment_list
@@ -141,3 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
   //on load get all comments
   renderComments();
 });
+
+
+
+
