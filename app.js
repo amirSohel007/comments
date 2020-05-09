@@ -3,9 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Target DOM Elements
   const comment_box = document.querySelector("#comment_box");
   const comment_wrapper = document.querySelector("#comment-listing");
-  const nestedCommentForm = document.querySelector(
-    "#comment_list_inner .comment-area"
-  );
+  const nestedCommentForm = document.querySelector("#comment_list_inner .comment-area");
+  const emoji_container = document.getElementById("emoji")
 
   //initialize loacl stroge if not
   if (localStorage.getItem("comments") === null)
@@ -17,6 +16,36 @@ document.addEventListener("DOMContentLoaded", () => {
     all_comments.push(comment);
     setItemInLocalStorage(all_comments);
   };
+
+  //get emoji on keypress
+  const getEmoticons = async (parms) => {
+    const get_responce = await fetch(`https://emoji.getdango.com/api/emoji?q=${parms}`);
+    const json_data = await get_responce.json();
+    return json_data;
+  };
+
+  //gettig li list of emoji
+  comment_box.addEventListener("input", async (e) => {
+    const list = await getEmoticons(e.target.value);
+    let emoji_list = await list.results
+      .map((list) => {
+        return `<li>${list.text}</li>`;
+      })
+      .join("");
+    if(comment_box.value != '')
+      emoji_container.innerHTML = emoji_list;
+      else
+      emoji_container.innerHTML = ''
+  });
+
+
+  //get emoji on click and insert in input 
+  document.getElementById("emoji").addEventListener('click', (e)=> {
+     const stor_emoji = e.target.textContent
+     comment_box.value +=  stor_emoji
+     emoji_container.innerHTML = ''
+  })
+
 
   //update local stroge with new data
   const setItemInLocalStorage = (newData) => {
