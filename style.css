@@ -18,7 +18,7 @@ body {
     height: 100%;
     z-index: -1;
 }
-
+ 
 .comment-wrapper {
 	max-width: 400px;
 	background: #fff;
@@ -90,7 +90,6 @@ body {
 	flex: 3;
 	border: solid 1px #e5e5e5;
 	min-height: 29px;
-	margin-right: 25px;
 	padding: 0 15px;
 	font-family: 'Nunito', sans-serif;
 	border-radius: 30px;
@@ -100,8 +99,7 @@ body {
 	line-height: 27px;
 }
 
-.comment-area input:focus,
-.comment-area button:focus {
+.comment-area input:focus{
 	outline: none;
 	box-shadow: 0 0 0;
 	transition: all 0.3s;
@@ -119,18 +117,6 @@ body {
 	left: 0;
 	right: 0;
 	margin: auto;
-}
-
-.comment-area button {
-	background: #3F51B5;
-	border: none;
-	color: #fff;
-	padding: 0px 20px;
-	border-radius: 2px;
-	font-size: 13px;
-	cursor: pointer;
-	z-index: 999;
-	border-radius: 30px;
 }
 
 #comment_list_inner .comment-area {
