@@ -31,12 +31,10 @@ document.addEventListener("DOMContentLoaded", () => {
     let all_comments = getAllComments();
     all_comments.forEach((element, i) => {
       if (i == index) {
-        if (element.children) {
-          element.children.push(reply);
-        } else {
+        if (!element.children) {
           element.children = [];
-          element.children.push(reply);
         }
+        element.children.push(reply);
       }
     });
     updateStroge(all_comments);
