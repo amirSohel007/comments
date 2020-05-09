@@ -69,14 +69,16 @@ document.addEventListener("DOMContentLoaded", () => {
     nestedCommentForm.style.display = "flex";
     reply_textbox.addEventListener("click", () => {
       let message = document.querySelector("#reply-box").value;
-      let comment_obj = {
-        name: "Ankit",
-        src: "http://facebook.com/",
-        message: message,
-      };
-      addReply(comment_obj, index); //adding reply in local stroge
-      document.querySelector("#reply-box").value = "";
-      nestedCommentForm.style.display = "none";
+        if(message != ''){
+          let comment_obj = {
+            name: "Ankit",
+            src: "http://facebook.com/",
+            message: message,
+          };
+          addReply(comment_obj, index); //adding reply in local stroge
+          document.querySelector("#reply-box").value = "";
+          nestedCommentForm.style.display = "none";
+        }
     });
   };
 
