@@ -104,10 +104,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 (children, childIndex) => `<div class="sub-comment">
         <div class="user_avtar">
             <img
-                src="https://instagram.fdel18-1.fna.fbcdn.net/v/t51.2885-15/e35/95168755_1188313104848732_7163586086101228730_n.jpg?_nc_ht=instagram.fdel18-1.fna.fbcdn.net&_nc_cat=108&_nc_ohc=E04Bpx3IeJYAX8m_BP-&oh=3486a37e1f6b0807382ed237660dc258&oe=5EDC7BFF">
+                src="https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F6%2F2018%2F04%2Fnup_181708_1056-2000.jpg">
         </div>
         <div class="user-comments">
-            <h3>New Person</h3>
+            <h3>Johny Smith</h3>
             <p>${children.message}</p>
             <a onclick="reply(${index})" class="reply">Reply</a>
             <a onclick="deleteChild(${childIndex})" class="delete">Delete</a>
