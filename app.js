@@ -1,11 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
   let comments = [];
   // Target DOM Elements
-  let comment_box = document.querySelector("#comment_box");
-  let comment_btn = document.querySelector("#add_comment");
-  let comment_wrapper = document.querySelector("#comment-listing");
-  let reply_textbox = document.querySelector("#reply_comment");
-  let nestedCommentForm = document.querySelector(
+  const comment_box = document.querySelector("#comment_box");
+  const comment_wrapper = document.querySelector("#comment-listing");
+  const nestedCommentForm = document.querySelector(
     "#comment_list_inner .comment-area"
   );
 
@@ -14,22 +12,23 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("comments", JSON.stringify(comments));
 
   //Add comment object in localStorge
-  let addComment = (comment) => {
-    let all_comments = getAllComments();
+  const addComment = (comment) => {
+    let all_comments = getItemFromLocalStorage();
     all_comments.push(comment);
-    updateStroge(all_comments);
+    setItemInLocalStorage(all_comments);
   };
 
   //update local stroge with new data
-  let updateStroge = (newData) => {
+  const setItemInLocalStorage = (newData) => {
     localStorage.setItem("comments", JSON.stringify(newData));
     renderComments();
   };
 
   //Add reply on the same index
-  let addReply = (reply, index) => {
-    let all_comments = getAllComments();
-    all_comments.forEach((element, i) => {
+  const addReply = (reply, index) => {
+    let all_comments = getItemFromLocalStorage();
+    all_comments.find((element, i) => {
+      console.log(element);
       if (i == index) {
         if (element.children) {
           element.children.push(reply);
@@ -39,37 +38,46 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
     });
-    updateStroge(all_comments);
+    setItemInLocalStorage(all_comments);
   };
 
   //Delete parent comment
-  let deleteComment = (index) => {
-    let get_all_comments = getAllComments();
-    get_all_comments.splice(index, 1);
-    updateStroge(get_all_comments);
+  const deleteComment = (index) => {
+    let comment_list = getItemFromLocalStorage();
+    comment_list.splice(index, 1);
+    setItemInLocalStorage(comment_list);
   };
 
   // Delete child comment
-  let deleteChild = (id) => {
-    let get_all_comments = getAllComments();
-    get_all_comments.map((comment) => {
+  const deleteChild = (id) => {
+    let comment_list = getItemFromLocalStorage();
+    comment_list.forEach((comment) => {
       if (comment.children) {
         comment.children.splice(id, 1);
       }
     });
-    updateStroge(get_all_comments);
+    setItemInLocalStorage(comment_list);
+  };
+
+  //Check is key enter or not
+  const checkEnterKey = (e) => {
+    var code = e.keyCode ? e.keyCode : e.which;
+    return code == 13 ? true : false;
   };
 
   //get all existing comments from localStroge
-  let getAllComments = () => JSON.parse(localStorage.getItem("comments"));
+  const getItemFromLocalStorage = () =>
+    JSON.parse(localStorage.getItem("comments"));
 
   // Reply on any parent comment
-  let reply = (index) => {
+  const reply = (index) => {
     //show comment reply form
     nestedCommentForm.style.display = "flex";
-    reply_textbox.addEventListener("click", () => {
-      let message = document.querySelector("#reply-box").value;
-        if(message != ''){
+    const reply_input = document.querySelector("#reply-box");
+    reply_input.addEventListener("keypress", (e) => {
+      if (checkEnterKey(e)) {
+        let message = reply_input.value;
+        if (message != "") {
           let comment_obj = {
             name: "Ankit",
             src: "http://facebook.com/",
@@ -79,13 +87,16 @@ document.addEventListener("DOMContentLoaded", () => {
           document.querySelector("#reply-box").value = "";
           nestedCommentForm.style.display = "none";
         }
+      }
     });
   };
 
+  //render all comments on UI
   let renderComments = () => {
-    let get_all_comments = getAllComments();
-    let comment_list = get_all_comments.map((comment, index) => {
-      return `<li class="comment_list">
+    let comment_lists = getItemFromLocalStorage();
+    let comment_list = comment_lists
+      .map((comment, index) => {
+        return `<li class="comment_list">
         <div class="parent-comment">
             <div class="user_avtar">
                 <img
@@ -100,8 +111,9 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
         ${
           comment && comment.children
-            ? comment.children.map(
-                (children, childIndex) => `<div class="sub-comment">
+            ? comment.children
+                .map(
+                  (children, childIndex) => `<div class="sub-comment">
         <div class="user_avtar">
             <img
                 src="https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F6%2F2018%2F04%2Fnup_181708_1056-2000.jpg">
@@ -112,13 +124,17 @@ document.addEventListener("DOMContentLoaded", () => {
             <a onclick="reply(${index})" class="reply">Reply</a>
             <a onclick="deleteChild(${childIndex})" class="delete">Delete</a>
         </div>
-    </div>`).join(''): ""
+    </div>`
+                )
+                .join("")
+            : ""
         }
     </li>`;
-    }).join('');
+      })
+      .join("");
 
     //Bind wiht html
-    comment_wrapper.innerHTML = comment_list
+    comment_wrapper.innerHTML = comment_list;
     //get list from bottom
     comment_wrapper.scrollTo({
       top: comment_wrapper.scrollHeight,
@@ -126,26 +142,25 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
+  //adding new comment on press enter
+  comment_box.addEventListener("keypress", (e) => {
+    if (checkEnterKey(e)) {
+      let message = comment_box.value;
+      let comment_obj = {
+        name: "Amir Sohel",
+        src: "http://google.com/",
+        message: message,
+      };
+      comment_box.value = "";
+      addComment(comment_obj);
+    }
+  });
+
+  //Adding functions in global scope
   window.reply = reply;
   window.deleteComment = deleteComment;
   window.deleteChild = deleteChild;
 
-  //adding new comment
-  comment_btn.addEventListener("click", () => {
-    let message = comment_box.value;
-    let comment_obj = {
-      name: "Amir Sohel",
-      src: "http://google.com/",
-      message: message,
-    };
-    comment_box.value = "";
-    addComment(comment_obj);
-    renderComments();
-  });
   //on load get all comments
   renderComments();
 });
-
-
-
-
