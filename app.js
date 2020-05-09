@@ -141,7 +141,3 @@ document.addEventListener("DOMContentLoaded", () => {
   //on load get all comments
   renderComments();
 });
-
-
-
-
