@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  let comments = [];
+  const comments = [];
   // Target DOM Elements
   const comment_box = document.querySelector("#comment_box");
   const comment_wrapper = document.querySelector("#comment-listing");
@@ -54,16 +54,14 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   //Add reply on the same index
-  const addReply = (reply, index) => {
+  const addReply = (reply, index) => { 
     let all_comments = getItemFromLocalStorage();
     all_comments.find((element, i) => {
-      console.log(element);
       if (i == index) {
         if (element.children) {
           element.children.push(reply);
         } else {
-          element.children = [];
-          element.children.push(reply);
+          element.children = [reply];
         }
       }
     });
@@ -125,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let comment_lists = getItemFromLocalStorage();
     let comment_list = comment_lists
       .map((comment, index) => {
-        return `<li class="comment_list">
+        return  `<li class="comment_list">
         <div class="parent-comment">
             <div class="user_avtar">
                 <img
@@ -153,10 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <a onclick="reply(${index})" class="reply">Reply</a>
             <a onclick="deleteChild(${childIndex})" class="delete">Delete</a>
         </div>
-    </div>`
-                )
-                .join("")
-            : ""
+    </div>`).join("") : ""
         }
     </li>`;
       })
