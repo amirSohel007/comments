@@ -57,8 +57,8 @@ document.addEventListener("DOMContentLoaded", () => {
   //Delete parent comment
   const deleteComment = (index) => {
     let comment_list = getItemFromLocalStorage();
-    comment_list.splice(index, 1);
-    setItemInLocalStorage(comment_list);
+    const updatedComment = comment_list.filter((element,i) =>  i != index);
+    setItemInLocalStorage(updatedComment);
   };
 
   // Delete child comment
