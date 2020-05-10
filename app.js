@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const comment_wrapper = document.querySelector("#comment-listing");
   const nestedCommentForm = document.querySelector("#comment_list_inner .comment-area");
   const emoji_container = document.getElementById("emoji")
+  const reply_input = document.querySelector("#reply-box")
 
   //initialize loacl stroge if not
   if (localStorage.getItem("comments") === null)
@@ -27,12 +28,8 @@ document.addEventListener("DOMContentLoaded", () => {
   //gettig li list of emoji
   comment_box.addEventListener("input", async (e) => {
     const list = await getEmoticons(e.target.value);
-    let emoji_list = await list.results
-      .map((list) => `<li>${list.text}</li>`).join("");
-     if(comment_box.value != '')
-      emoji_container.innerHTML = emoji_list;
-      else
-      emoji_container.innerHTML = ''
+    let emoji_list = await list.results.map((list) => `<li>${list.text}</li>`).join("");
+     comment_box.value != '' ? emoji_container.innerHTML = emoji_list :  emoji_container.innerHTML = '';
   });
 
 
@@ -43,7 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
      emoji_container.innerHTML = ''
   })
 
-
   //update local stroge with new data
   const setItemInLocalStorage = (newData) => {
     localStorage.setItem("comments", JSON.stringify(newData));
@@ -53,15 +49,8 @@ document.addEventListener("DOMContentLoaded", () => {
   //Add reply on the same index
   const addReply = (reply, index) => { 
     let all_comments = getItemFromLocalStorage();
-    all_comments.find((element, i) => {
-      if (i == index) {
-        if (element.children) {
-          element.children.push(reply);
-        } else {
-          element.children = [reply];
-        }
-      }
-    });
+    const foundElem =  all_comments.find((element ,i) => i === index)
+    foundElem.children ? foundElem.children.push(reply) : foundElem.children = [reply]
     setItemInLocalStorage(all_comments);
   };
 
@@ -90,14 +79,12 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   //get all existing comments from localStroge
-  const getItemFromLocalStorage = () =>
-    JSON.parse(localStorage.getItem("comments"));
+  const getItemFromLocalStorage = () => JSON.parse(localStorage.getItem("comments"));
 
   // Reply on any parent comment
   const reply = (index) => {
     //show comment reply form
     nestedCommentForm.style.display = "flex";
-    const reply_input = document.querySelector("#reply-box");
     reply_input.addEventListener("keypress", (e) => {
       if (checkEnterKey(e)) {
         let message = reply_input.value;
@@ -108,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
             message: message,
           };
           addReply(comment_obj, index); //adding reply in local stroge
-          document.querySelector("#reply-box").value = "";
+          reply_input.value = "";
           nestedCommentForm.style.display = "none";
         }
       }
