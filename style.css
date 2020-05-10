@@ -177,7 +177,7 @@ body {
 }
 
 #comment-listing::-webkit-scrollbar-thumb {
-	background-color: #5e5e5e;
+	background-color: #c3c2c2;
 	border-radius: 30px;
 }
 
@@ -194,4 +194,15 @@ body {
 #emoji li {
     margin-right: 13px;
     cursor: pointer;
+}
+
+.heart{
+	position: relative;
+    top: 5px;
+	margin-right: 5px;
+	width: 20px;
+}
+
+.copyright a {
+	color: #fff;
 }

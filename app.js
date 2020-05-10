@@ -151,7 +151,8 @@ document.addEventListener("DOMContentLoaded", () => {
             <a onclick="reply(${index})" class="reply">Reply</a>
             <a onclick="deleteChild(${childIndex})" class="delete">Delete</a>
         </div>
-    </div>`).join("") : ""
+    </div>`).join("")
+ : ""
         }
     </li>`;
       })
