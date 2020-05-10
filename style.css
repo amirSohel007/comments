@@ -26,7 +26,7 @@ body {
 	margin-left: 40px;
 	border-radius: 3px;
 	margin-top: 20px !important;
-	min-height: 80vh;
+	min-height: 85vh;
 	position: relative;
 }
 
@@ -113,7 +113,7 @@ body {
 	display: flex;
 	position: absolute;
 	width: 90%;
-	bottom: 20px;
+	bottom: 50px;
 	left: 0;
 	right: 0;
 	margin: auto;
@@ -122,7 +122,7 @@ body {
 #comment_list_inner .comment-area {
 	position: static;
     display: none;
-    margin-bottom:60px;
+    margin-bottom:80px;
     margin-top: 20px;
 }
 
@@ -177,6 +177,32 @@ body {
 }
 
 #comment-listing::-webkit-scrollbar-thumb {
-	background-color: #5e5e5e;
+	background-color: #c3c2c2;
 	border-radius: 30px;
+}
+
+#emoji {
+    position: absolute;
+    width: 100%;
+    padding: 0;
+    list-style: none;
+    margin: 0;
+	display: flex;
+	bottom: 10px;
+}
+
+#emoji li {
+    margin-right: 13px;
+    cursor: pointer;
+}
+
+.heart{
+	position: relative;
+    top: 5px;
+	margin-right: 5px;
+	width: 20px;
+}
+
+.copyright a {
+	color: #fff;
 }
