@@ -28,11 +28,8 @@ document.addEventListener("DOMContentLoaded", () => {
   comment_box.addEventListener("input", async (e) => {
     const list = await getEmoticons(e.target.value);
     let emoji_list = await list.results
-      .map((list) => {
-        return `<li>${list.text}</li>`;
-      })
-      .join("");
-    if(comment_box.value != '')
+      .map((list) => `<li>${list.text}</li>`).join("");
+     if(comment_box.value != '')
       emoji_container.innerHTML = emoji_list;
       else
       emoji_container.innerHTML = ''
