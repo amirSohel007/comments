@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+
   const comments = [];
   // Target DOM Elements
   const comment_box = document.querySelector("#comment_box");
@@ -82,11 +82,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const getItemFromLocalStorage = () => JSON.parse(localStorage.getItem("comments"));
 
   // Reply on any parent comment
-  const reply = (index) => {
-    //show comment reply form
-    nestedCommentForm.style.display = "flex";
-    reply_input.addEventListener("keypress", (e) => {
-      if (checkEnterKey(e)) {
+   const reply = (index) => {
+     //show comment reply form
+     nestedCommentForm.style.display = "flex";
+     reply_input.addEventListener("keypress", (e) => {
+       if (checkEnterKey(e)) {
         let message = reply_input.value;
         if (message != "") {
           let comment_obj = {
@@ -97,10 +97,11 @@ document.addEventListener("DOMContentLoaded", () => {
           addReply(comment_obj, index); //adding reply in local stroge
           reply_input.value = "";
           nestedCommentForm.style.display = "none";
+          reply_input.removeEventListener("keypress", reply)
         }
-      }
-    });
-  };
+       }
+     },);
+   };
 
   //render all comments on UI
   let renderComments = () => {
@@ -164,12 +165,6 @@ document.addEventListener("DOMContentLoaded", () => {
       addComment(comment_obj);
     }
   });
-
-  //Adding functions in global scope
-  window.reply = reply;
-  window.deleteComment = deleteComment;
-  window.deleteChild = deleteChild;
-
   //on load get all comments
   renderComments();
-});
+
