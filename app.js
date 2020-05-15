@@ -12,14 +12,14 @@
     localStorage.setItem("comments", JSON.stringify(comments));
 
   //Add comment object in localStorge
-  const addComment = (comment) => {
+  function addComment(comment) {
     let all_comments = getItemFromLocalStorage();
     all_comments.push(comment);
     setItemInLocalStorage(all_comments);
   };
 
   //get emoji on keypress
-  const getEmoticons = async (parms) => {
+  async function getEmoticons(parms) {
     const get_responce = await fetch(`https://emoji.getdango.com/api/emoji?q=${parms}`);
     const json_data = await get_responce.json();
     return json_data;
@@ -41,13 +41,13 @@
   })
 
   //update local stroge with new data
-  const setItemInLocalStorage = (newData) => {
+  function setItemInLocalStorage(newData) {
     localStorage.setItem("comments", JSON.stringify(newData));
     renderComments();
   };
 
   //Add reply on the same index
-  const addReply = (reply, index) => { 
+  function addReply(reply, index) { 
     let all_comments = getItemFromLocalStorage();
     const foundElem =  all_comments.find((element ,i) => i === index)
     foundElem.children ? foundElem.children.push(reply) : foundElem.children = [reply]
@@ -55,14 +55,14 @@
   };
 
   //Delete parent comment
-  const deleteComment = (index) => {
+  function deleteComment(index) {
     let comment_list = getItemFromLocalStorage();
     const updatedComment = comment_list.filter((element,i) =>  i != index);
     setItemInLocalStorage(updatedComment);
   };
 
   // Delete child comment
-  const deleteChild = (id) => {
+  function deleteChild(id) {
     let comment_list = getItemFromLocalStorage();
     comment_list.forEach((comment) => {
       if (comment.children) {
@@ -72,21 +72,17 @@
     setItemInLocalStorage(comment_list);
   };
 
-  //Check is key enter or not
-  const checkEnterKey = (e) => {
-    var code = e.keyCode ? e.keyCode : e.which;
-    return code == 13 ? true : false;
-  };
 
   //get all existing comments from localStroge
-  const getItemFromLocalStorage = () => JSON.parse(localStorage.getItem("comments"));
+  function getItemFromLocalStorage() {
+   return JSON.parse(localStorage.getItem("comments"))
+  };
 
   // Reply on any parent comment
-   const reply = (index) => {
-     //show comment reply form
+   function reply(index) {
      nestedCommentForm.style.display = "flex";
      reply_input.addEventListener("keypress", (e) => {
-       if (checkEnterKey(e)) {
+      if (e.keyCode === 13) {
         let message = reply_input.value;
         if (message != "") {
           let comment_obj = {
@@ -97,55 +93,50 @@
           addReply(comment_obj, index); //adding reply in local stroge
           reply_input.value = "";
           nestedCommentForm.style.display = "none";
-          reply_input.removeEventListener("keypress", reply)
         }
        }
-     },);
+     });
    };
 
-  //render all comments on UI
-  let renderComments = () => {
-    let comment_lists = getItemFromLocalStorage();
-    let comment_list = comment_lists
-      .map((comment, index) => {
-        return  `<li class="comment_list">
-        <div class="parent-comment">
-            <div class="user_avtar">
-                <img
-                    src="https://instagram.fdel18-1.fna.fbcdn.net/v/t51.2885-15/e35/95168755_1188313104848732_7163586086101228730_n.jpg?_nc_ht=instagram.fdel18-1.fna.fbcdn.net&_nc_cat=108&_nc_ohc=E04Bpx3IeJYAX8m_BP-&oh=3486a37e1f6b0807382ed237660dc258&oe=5EDC7BFF">
-            </div>
-            <div class="user-comments">
-                <h3>Amir Sohel</h3>
-                <p>${comment.message}</p>
-                <a onclick="reply(${index})" class="reply">Reply</a>
-                <a onclick="deleteComment(${index})" class="delete">Delete</a>
-            </div>
-        </div>
-        ${
-          comment && comment.children
-            ? comment.children
-                .map(
-                  (children, childIndex) => `<div class="sub-comment">
+   function renderCommentHTML(comment, index) {
+     return `<li class="comment_list">
+    <div class="parent-comment">
         <div class="user_avtar">
             <img
-                src="https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F6%2F2018%2F04%2Fnup_181708_1056-2000.jpg">
+                src="https://instagram.fdel18-1.fna.fbcdn.net/v/t51.2885-15/e35/95168755_1188313104848732_7163586086101228730_n.jpg?_nc_ht=instagram.fdel18-1.fna.fbcdn.net&_nc_cat=108&_nc_ohc=E04Bpx3IeJYAX8m_BP-&oh=3486a37e1f6b0807382ed237660dc258&oe=5EDC7BFF">
         </div>
         <div class="user-comments">
-            <h3>Johny Smith</h3>
-            <p>${children.message}</p>
+            <h3>Amir Sohel</h3>
+            <p>${comment.message}</p>
             <a onclick="reply(${index})" class="reply">Reply</a>
-            <a onclick="deleteChild(${childIndex})" class="delete">Delete</a>
+            <a onclick="deleteComment(${index})" class="delete">Delete</a>
         </div>
-    </div>`).join("")
- : ""
-        }
-    </li>`;
-      })
-      .join("");
+    </div>
+    ${
+      comment && comment.children
+        ? comment.children
+            .map(
+              (children, childIndex) => `<div class="sub-comment">
+    <div class="user_avtar">
+        <img
+            src="https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F6%2F2018%2F04%2Fnup_181708_1056-2000.jpg">
+    </div>
+    <div class="user-comments">
+        <h3>Johny Smith</h3>
+        <p>${children.message}</p>
+        <a onclick="reply(${index})" class="reply">Reply</a>
+        <a onclick="deleteChild(${childIndex})" class="delete">Delete</a>
+    </div>
+</div>`).join(""): ""}</li>`}
 
-    //Bind wiht html
-    comment_wrapper.innerHTML = comment_list;
-    //get list from bottom
+
+
+  //render all comments on UI
+  function renderComments () {
+    let comment_lists = getItemFromLocalStorage();
+    let comment_list = comment_lists.map(renderCommentHTML).join("");
+    comment_wrapper.innerHTML = comment_list
+        //get list from bottom
     comment_wrapper.scrollTo({
       top: comment_wrapper.scrollHeight,
       behavior: "smooth",
@@ -154,7 +145,7 @@
 
   //adding new comment on press enter
   comment_box.addEventListener("keypress", (e) => {
-    if (checkEnterKey(e)) {
+    if (e.keyCode === 13) {
       let message = comment_box.value;
       let comment_obj = {
         name: "Amir Sohel",
@@ -165,6 +156,7 @@
       addComment(comment_obj);
     }
   });
+  
   //on load get all comments
   renderComments();
 
